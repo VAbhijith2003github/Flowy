@@ -22,9 +22,9 @@ const Sidebar = () => {
           {" "}
           Today
         </Link>
-        <Link to="/?category=Tommorow" className="menu-item">
+        <Link to="/?category=Tomorrow" className="menu-item">
           {" "}
-          Tommorow
+          Tomorrow
         </Link>
         <Link to="/?category=Upcoming" className="menu-item">
           {" "}

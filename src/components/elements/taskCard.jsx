@@ -16,14 +16,14 @@ const TaskCard = ({ task }) => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-  const targetDate = new Date(task.targetdate);
+  const dueDate = new Date(task.dueDate);
   const today = new Date();
 
   const getStatusLabel = () => {
-    if (targetDate.toDateString() === today.toDateString()) {
+    if (dueDate.getDate() === today.getDate()) {
       return <span className="status-label status-orange"></span>;
     }
-    if (new Date(task.targetdate) < today) {
+    if (new Date(task.dueDate) < today) {
       return <span className="status-label status-red"></span>;
     }
     return <span className="status-label status-green"></span>;
