@@ -1,0 +1,291 @@
+a {
+  text-decoration: none;
+}
+#Title {
+  background: linear-gradient(to right top, rgb(98, 6, 179), rgb(161, 4, 161));
+}
+.gradient-text {
+  background: linear-gradient(
+    to right top,
+    rgb(110, 14, 194),
+    rgb(184, 13, 184)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #252525;
+  color: white;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0px;
+  width: 250px;
+  height: 100%;
+  background: #333;
+  color: #fff;
+  transition: all 0.4s ease;
+  transform: translateX(-100%);
+}
+
+.sidebar.active {
+  transform: translateX(0);
+}
+
+.sidebar .menu-item {
+  display: block;
+  padding: 10px;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.sidebar .menu-item:hover {
+  background: #444;
+}
+
+.sidebar i {
+  margin-right: 10px;
+}
+
+.sidebar .menu-title {
+  padding: 10px;
+  text-transform: uppercase;
+  color: #aaa;
+  font-size: 12px;
+}
+
+.sidebar.active ~ .content {
+  margin-left: 250px;
+}
+
+.content {
+  margin-left: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: 20px;
+}
+.sidebaricon {
+  outline: none;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  margin: 5px 0px 0px 10px;
+}
+.categorytitle {
+  font-size: 30px;
+  font-weight: 600;
+  margin: 20px 0;
+}
+
+.task-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  width: 90%;
+  margin-top: 30px;
+}
+
+.task-details {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.task-title {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.task-title .complete-icon {
+  margin-left: 8px;
+  color: green;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.label {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.complete-button {
+  background-color: #0d70d9;
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.complete-button:hover {
+  background-color: #0056b3;
+}
+
+.complete-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.status-label {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.status-orange {
+  background-color: orange;
+}
+
+.status-red {
+  background-color: red;
+}
+
+.status-green {
+  background-color: green;
+}
+
+.calender {
+  width: 12px;
+  height: 12px;
+  margin: 0px 5px 0px 5px;
+  color: white;
+}
+
+.task-icon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 45px;
+  margin: 5px;
+}
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #252525;
+  border-top: 1px solid #ccc;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bottom-bar input,
+.bottom-bar textarea {
+  border: 1px solid #72727285;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  margin: 10px 0px 10px 10px;
+  border-radius: 5px;
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.bottom-bar input[type="date"] {
+  padding: 4px;
+  width: 100px;
+  color: white;
+}
+
+.bottom-bar button {
+  background-color: #606060;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.add-button {
+  font-size: 22px;
+  background-color: #d91b44 !important;
+  border-radius: 100% !important;
+}
+
+.bottom-bar button:hover {
+  background-color: #16a085;
+}
+
+.go-back-button {
+  color: #333;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+}
+
+.go-back-button:hover {
+  background-color: #f3f3f3;
+}
+
+.task-form {
+  text-align: left;
+}
+
+@media screen and (max-height: 500px) {
+  .task-form h2 {
+    display: none;
+  }
+
+  .bottom-bar input,
+  .bottom-bar textarea,
+  .bottom-bar input[type="date"] {
+    margin-bottom: 8px;
+  }
+
+  .go-back-button {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    padding: 4px;
+  }
+
+  .bottom-bar {
+    padding: 8px;
+    flex-direction: column;
+  }
+
+  .task-form {
+    padding: 0 16px;
+  }
+}
+
+body::-webkit-scrollbar {
+  width: 4px;
+  background-color: black;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #555;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #eee;
+}
+
+@media screen and (max-width: 768px) {
+  body::-webkit-scrollbar {
+    display: none;
+  }
+}
+.task-form .react-datepicker-wrapper {
+  margin: 0px 40px 5px 0px;
+}
+
