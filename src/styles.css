@@ -371,3 +371,7 @@ body::-webkit-scrollbar-track {
   padding: 8px;
   color: rgb(255, 255, 255);
 }
+.editform
+{
+  display: flex !important;
+}

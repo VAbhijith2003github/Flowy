@@ -74,6 +74,11 @@ const TaskCard = ({ task }) => {
     setIsEditing(false);
   };
 
+  const handleClose = () => {
+    setIsEditing(false);
+    document.getElementsByClassName("bottom-bar")[0].style.display = "block";
+  };
+
   return (
     <div
       className="task-card"
@@ -119,7 +124,7 @@ const TaskCard = ({ task }) => {
         )}
       </div>
       <>
-        <div>{isEditing && <TaskEdit task={task} onSave={onSave} />}</div>
+        <div>{isEditing && <TaskEdit task={task} onSave={onSave} handleClose={handleClose} />}</div>
       </>
     </div>
   );

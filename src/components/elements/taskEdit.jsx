@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import closebutton from "../../images/cross.png";
 
-const TaskEdit = ({ task, onSave }) => {
+const TaskEdit = ({ task, onSave, handleClose }) => {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const [dueDate, setDueDate] = useState(new Date(task.dueDate));
@@ -20,6 +21,20 @@ const TaskEdit = ({ task, onSave }) => {
   return (
     <div className="task-edit-container">
       <form onSubmit={handleSubmit} className="editform">
+        <div style={{width:"100%",height:"25px"}}>
+          <img
+            src={closebutton}
+            alt="close"
+            style={{
+              background: "transparent",
+              width: "25px",
+              height: "25px",
+              cursor: "pointer",
+              float: "right",
+            }}
+            onClick={handleClose}
+          />
+        </div>
         <input
           type="text"
           name="name"
@@ -28,6 +43,7 @@ const TaskEdit = ({ task, onSave }) => {
           onChange={(e) => setTitle(e.target.value)}
           style={{ backgroundColor: "rgba(30, 30, 30)", color: "white" }}
         />
+
         <textarea
           name="description"
           value={description}
@@ -58,7 +74,6 @@ const TaskEdit = ({ task, onSave }) => {
             minDate={minDate}
             name="date"
           />
-
           <label
             htmlFor="time"
             style={{
@@ -69,7 +84,6 @@ const TaskEdit = ({ task, onSave }) => {
           >
             select time
           </label>
-
           <DatePicker
             selected={dueDate}
             onChange={handleTaskDueDateChange}
