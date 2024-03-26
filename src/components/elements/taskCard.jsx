@@ -4,17 +4,47 @@ import calender from "../../images/calendar.png";
 import { Link } from "react-router-dom";
 import editIcon from "../../images/editing.png";
 import deleteIcon from "../../images/delete.png";
+import { useContext } from "react";
+import { MyContext } from "../../App";
+import TaskEdit from "./taskEdit";
 
 const TaskCard = ({ task }) => {
-  const [isComplete, setIsComplete] = useState(task.completed);
+  const { tasks, setTasks } = useContext(MyContext);
   const [isHovered, setIsHovered] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
 
+  function UpdateTasks(id) {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return {
+          ...task,
+          completed: !task.completed,
+        };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  }
+
+  const handleMarkasComplete = (id) => {
+    UpdateTasks(id);
+  };
+
+  const handleDelete = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+  };
+
   const handleMouseLeave = () => {
     setIsHovered(false);
+  };
+  const handleEdit = () => {
+    setIsEditing(true);
+    document.getElementsByClassName("bottom-bar")[0].style.display = "none";
   };
   const dueDate = new Date(task.dueDate);
   const today = new Date();
@@ -29,8 +59,19 @@ const TaskCard = ({ task }) => {
     return <span className="status-label status-green"></span>;
   };
 
-  const handleToggleComplete = () => {
-    setIsComplete(!isComplete);
+  const onSave = (id, title, description, dueDate) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id
+        ? {
+            ...task,
+            title,
+            description,
+            dueDate: dueDate.toISOString(),
+          }
+        : task
+    );
+    setTasks(updatedTasks);
+    setIsEditing(false);
   };
 
   return (
@@ -52,20 +93,34 @@ const TaskCard = ({ task }) => {
             day: "numeric",
           }).format(task.dateofcreation)}
         </p>
-        <button className="complete-button" onClick={handleToggleComplete}>
-          {isComplete ? "Mark as incomplete" : "Mark as complete"}
+        <button
+          className="complete-button"
+          onClick={() => handleMarkasComplete(task.id)}
+        >
+          {task.completed ? "Mark as incomplete" : "Mark as complete"}
         </button>
       </div>
       <div className="task-actions">
         {isHovered && (
           <>
-            <Link to={`/tasks/edit/${task.id}`}>
-              <img src={editIcon} alt="Edit" className="task-icon" />
-            </Link>
-            <img src={deleteIcon} alt="Delete" className="task-icon" />
+            <img
+              src={editIcon}
+              alt="Edit"
+              className="task-icon"
+              onClick={handleEdit}
+            />
+            <img
+              src={deleteIcon}
+              alt="Delete"
+              className="task-icon"
+              onClick={() => handleDelete(task.id)}
+            />
           </>
         )}
       </div>
+      <>
+        <div>{isEditing && <TaskEdit task={task} onSave={onSave} />}</div>
+      </>
     </div>
   );
 };
