@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import TaskSection from "./components/pages/tasksection";
-import Task from "./components/pages/task";
+import Task from "./components/elements/task";
 export const MyContext = createContext();
 
 const App = () => {
@@ -23,7 +23,6 @@ const App = () => {
       dueDate: new Date(),
     },
   ]);
-
 
   return (
     <div>

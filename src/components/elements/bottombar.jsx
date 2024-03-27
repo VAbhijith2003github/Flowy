@@ -15,9 +15,8 @@ const BottomBar = () => {
     dueDate: new Date(),
   });
 
- 
   function TaskAddition(task) {
-   setTasks([...tasks, task]);
+    setTasks([...tasks, task]);
   }
 
   const minDate = new Date();

@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles.css";
 import calender from "../../images/calendar.png";
-import { Link } from "react-router-dom";
 import editIcon from "../../images/editing.png";
 import deleteIcon from "../../images/delete.png";
 import { useContext } from "react";
 import { MyContext } from "../../App";
 import TaskEdit from "./taskEdit";
+import Task from "./task";
 
 const TaskCard = ({ task }) => {
   const { tasks, setTasks } = useContext(MyContext);
   const [isHovered, setIsHovered] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [openCard, setOpenCard] = useState(false);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -42,10 +43,12 @@ const TaskCard = ({ task }) => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
+
   const handleEdit = () => {
     setIsEditing(true);
     document.getElementsByClassName("bottom-bar")[0].style.display = "none";
   };
+
   const dueDate = new Date(task.dueDate);
   const today = new Date();
 
@@ -74,8 +77,33 @@ const TaskCard = ({ task }) => {
     setIsEditing(false);
   };
 
+  const handleClick = () => {
+    setOpenCard(true);
+    console.log("clicked");
+    document.getElementsByClassName("bottom-bar")[0].style.display = "none";
+  };
+
+  useEffect(() => {
+    const element = document.body;
+    if (!element) {
+      return;
+    }
+
+    element.style.overflowY = openCard ? "hidden" : "scroll";
+
+    return () => {
+      element.style.overflowY = "scroll";
+    };
+  }, [openCard]);
+
   const handleClose = () => {
     setIsEditing(false);
+    document.getElementsByClassName("bottom-bar")[0].style.display = "block";
+  };
+
+  const handleCloseCard = () => {
+    setOpenCard(false);
+    console.log("clicked");
     document.getElementsByClassName("bottom-bar")[0].style.display = "block";
   };
 
@@ -104,6 +132,15 @@ const TaskCard = ({ task }) => {
         >
           {task.completed ? "Mark as incomplete" : "Mark as complete"}
         </button>
+        {isHovered && (
+          <button
+            className="complete-button"
+            onClick={handleClick}
+            style={{ marginLeft: "10px" }}
+          >
+            View Task
+          </button>
+        )}
       </div>
       <div className="task-actions">
         {isHovered && (
@@ -124,7 +161,14 @@ const TaskCard = ({ task }) => {
         )}
       </div>
       <>
-        <div>{isEditing && <TaskEdit task={task} onSave={onSave} handleClose={handleClose} />}</div>
+        <div>
+          {isEditing && (
+            <TaskEdit task={task} onSave={onSave} handleClose={handleClose} />
+          )}
+        </div>
+        <div>
+          {openCard && <Task task={task} handleCloseCard={handleCloseCard} />}
+        </div>
       </>
     </div>
   );

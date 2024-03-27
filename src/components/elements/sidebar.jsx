@@ -13,7 +13,7 @@ const Sidebar = () => {
   return (
     <>
       <div className={`sidebar ${isActive ? "active" : ""}`}>
-        <Link to="/" >
+        <Link to="/">
           <h1 className="menu-item" id="Title">
             Flowy
           </h1>

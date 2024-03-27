@@ -21,7 +21,7 @@ const TaskEdit = ({ task, onSave, handleClose }) => {
   return (
     <div className="task-edit-container">
       <form onSubmit={handleSubmit} className="editform">
-        <div style={{width:"100%",height:"25px"}}>
+        <div style={{ width: "100%", height: "25px" }}>
           <img
             src={closebutton}
             alt="close"
