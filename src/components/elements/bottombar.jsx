@@ -13,6 +13,7 @@ const BottomBar = () => {
     description: "",
     dateofcreation: new Date(),
     dueDate: new Date(),
+    dateCompleted: null,
   });
 
   function TaskAddition(task) {

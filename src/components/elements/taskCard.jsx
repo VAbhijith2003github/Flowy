@@ -24,6 +24,7 @@ const TaskCard = ({ task }) => {
         return {
           ...task,
           completed: !task.completed,
+          dateCompleted: new Date(),
         };
       }
       return task;

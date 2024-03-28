@@ -17,7 +17,29 @@ const task = ({ task, handleCloseCard }) => {
             month: "short",
             day: "numeric",
           }).format(task.dueDate)}
+          ,&nbsp;&nbsp;
+          {new Intl.DateTimeFormat("en-US", {
+            hour: "numeric",
+            minute: "numeric",
+          }).format(task.dueDate)}
         </p>
+        {task.completed ? (
+          <p style={{ color: "rgba(117, 233, 152)" }}>
+            Completed :{" "}
+            {new Intl.DateTimeFormat("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            }).format(task.dateCompleted)}
+            ,&nbsp;&nbsp;
+            {new Intl.DateTimeFormat("en-US", {
+              hour: "numeric",
+              minute: "numeric",
+            }).format(task.dateCompleted)}
+          </p>
+        ) : (
+          <></>
+        )}
         <button onClick={handleCloseCard} className="taskboxbutton">
           Close
         </button>
