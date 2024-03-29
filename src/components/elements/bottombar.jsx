@@ -2,12 +2,13 @@ import React, { useState, useContext } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MyContext } from "../../App";
+import { v4 as uuidv4 } from "uuid";
 
 const BottomBar = () => {
   const { tasks, setTasks } = useContext(MyContext);
   const [isActive, setIsActive] = useState(false);
   const [task, setTask] = useState({
-    id: 0,
+    string_id: "",
     title: "",
     completed: false,
     description: "",
@@ -17,7 +18,30 @@ const BottomBar = () => {
   });
 
   function TaskAddition(task) {
-    setTasks([...tasks, task]);
+    const AddTask = async () => {
+      try {
+        const id = uuidv4();
+        task.string_id = id;
+        const response = await fetch("http://localhost:3001/api/tasks", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(task),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to add task");
+        }
+
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error("Error adding task:", error);
+      }
+    };
+
+    AddTask();
   }
 
   const minDate = new Date();

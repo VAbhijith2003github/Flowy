@@ -6,11 +6,11 @@ import closebutton from "../../images/cross.png";
 const TaskEdit = ({ task, onSave, handleClose }) => {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
-  const [dueDate, setDueDate] = useState(new Date(task.dueDate));
+  const [duedate, setDueDate] = useState(new Date(task.duedate));
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(task.id, title, description, dueDate);
+    onSave(task.id, title, description, duedate);
   };
   const handleTaskDueDateChange = (date) => {
     setDueDate(date);
@@ -68,7 +68,7 @@ const TaskEdit = ({ task, onSave, handleClose }) => {
             select date
           </label>
           <DatePicker
-            selected={dueDate}
+            selected={duedate}
             onChange={handleTaskDueDateChange}
             dateFormat="Pp"
             minDate={minDate}
@@ -85,7 +85,7 @@ const TaskEdit = ({ task, onSave, handleClose }) => {
             select time
           </label>
           <DatePicker
-            selected={dueDate}
+            selected={duedate}
             onChange={handleTaskDueDateChange}
             showTimeSelect
             showTimeSelectOnly

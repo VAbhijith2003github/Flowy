@@ -16,12 +16,12 @@ const task = ({ task, handleCloseCard }) => {
             year: "numeric",
             month: "short",
             day: "numeric",
-          }).format(task.dueDate)}
+          }).format(task.duedate)}
           ,&nbsp;&nbsp;
           {new Intl.DateTimeFormat("en-US", {
             hour: "numeric",
             minute: "numeric",
-          }).format(task.dueDate)}
+          }).format(task.duedate)}
         </p>
         {task.completed ? (
           <p style={{ color: "rgba(117, 233, 152)" }}>

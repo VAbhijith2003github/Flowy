@@ -5,24 +5,7 @@ import Task from "./components/elements/task";
 export const MyContext = createContext();
 
 const App = () => {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Task 1",
-      completed: false,
-      description: "This is task 1",
-      dateofcreation: new Date(),
-      dueDate: new Date(),
-    },
-    {
-      id: 2,
-      title: "Task 2",
-      completed: false,
-      description: "This is task 2",
-      dateofcreation: new Date(),
-      dueDate: new Date(),
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   return (
     <div>

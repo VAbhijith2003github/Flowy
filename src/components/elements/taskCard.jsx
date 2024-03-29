@@ -50,27 +50,27 @@ const TaskCard = ({ task }) => {
     document.getElementsByClassName("bottom-bar")[0].style.display = "none";
   };
 
-  const dueDate = new Date(task.dueDate);
+  const duedate = new Date(task.duedate);
   const today = new Date();
 
   const getStatusLabel = () => {
-    if (dueDate.getDate() === today.getDate()) {
+    if (duedate.getDate() === today.getDate()) {
       return <span className="status-label status-orange"></span>;
     }
-    if (new Date(task.dueDate) < today) {
+    if (new Date(task.duedate) < today) {
       return <span className="status-label status-red"></span>;
     }
     return <span className="status-label status-green"></span>;
   };
 
-  const onSave = (id, title, description, dueDate) => {
+  const onSave = (id, title, description, duedate) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id
         ? {
             ...task,
             title,
             description,
-            dueDate: dueDate.toISOString(),
+            duedate: duedate.toISOString(),
           }
         : task
     );
@@ -121,11 +121,8 @@ const TaskCard = ({ task }) => {
         <p>
           <span className="label">{getStatusLabel()}</span>
           <img src={calender} className="calender" alt="calender" />
-          {new Intl.DateTimeFormat("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          }).format(task.dateofcreation)}
+          {duedate.getDate()}{" "}
+          {duedate.toLocaleString("default", { month: "short" })}
         </p>
         <button
           className="complete-button"

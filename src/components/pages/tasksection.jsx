@@ -16,7 +16,7 @@ function useQuery() {
 
 const Task = () => {
   const query = useQuery();
-  const { tasks } = useContext(MyContext);
+  const { tasks, setTasks } = useContext(MyContext);
   const [displayTasks, setDisplayTasks] = useState([]);
   const [introText, setIntroText] = useState(true);
 
@@ -27,9 +27,30 @@ const Task = () => {
     } else if (!query.get("category")) {
       setIntroText(true);
     }
-  }, [query]);
+  }, [query.get("category")]);
 
   useEffect(() => {
+    const datafetch = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/tasks");
+        const data = await response.json();
+        setTasks(data);
+        console.log(data);
+        filterdata();
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    datafetch();
+  }, [query.get("category")]);
+
+  const filterdata = () => {
+    setDisplayTasks(
+      filteredTasks(
+        tasks.filter((task) => !task.completed),
+        "Today"
+      )
+    );
     if (query.get("category") === "all") {
       setDisplayTasks(tasks);
     } else if (query.get("category") === "Today") {
@@ -56,7 +77,7 @@ const Task = () => {
     } else if (query.get("category") === "Completed") {
       setDisplayTasks(filteredTasks(tasks, "Completed"));
     }
-  }, [query.get("category"), tasks]);
+  };
 
   return (
     <>
