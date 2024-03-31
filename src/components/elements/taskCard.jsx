@@ -18,27 +18,44 @@ const TaskCard = ({ task }) => {
     setIsHovered(true);
   };
 
-  function UpdateTasks(id) {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === id) {
-        return {
-          ...task,
-          completed: !task.completed,
-          dateCompleted: new Date(),
-        };
+  const handleMarkasComplete = (string_id) => {
+    console.log(string_id);
+    const updatecompletestatdb = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/api/tasks/updatecompletestatdb/${string_id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              completed: !task.completed,
+              dateCompleted: new Date(),
+            }),
+          }
+        );
+      } catch (err) {
+        console.error("Error updating task:", err);
       }
-      return task;
-    });
-    setTasks(updatedTasks);
-  }
-
-  const handleMarkasComplete = (id) => {
-    UpdateTasks(id);
+    };
+    updatecompletestatdb();
   };
 
-  const handleDelete = (id) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    setTasks(updatedTasks);
+  const handleDelete = (string_id) => {
+    const deletefromdb = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/api/tasks/${string_id}`,
+          {
+            method: "DELETE",
+          }
+        );
+      } catch (error) {
+        console.error("Error deleting task:", error);
+      }
+    };
+    deletefromdb();
   };
 
   const handleMouseLeave = () => {
@@ -61,21 +78,6 @@ const TaskCard = ({ task }) => {
       return <span className="status-label status-red"></span>;
     }
     return <span className="status-label status-green"></span>;
-  };
-
-  const onSave = (id, title, description, duedate) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === id
-        ? {
-            ...task,
-            title,
-            description,
-            duedate: duedate.toISOString(),
-          }
-        : task
-    );
-    setTasks(updatedTasks);
-    setIsEditing(false);
   };
 
   const handleClick = () => {
@@ -126,7 +128,7 @@ const TaskCard = ({ task }) => {
         </p>
         <button
           className="complete-button"
-          onClick={() => handleMarkasComplete(task.id)}
+          onClick={() => handleMarkasComplete(task.string_id)}
         >
           {task.completed ? "Mark as incomplete" : "Mark as complete"}
         </button>
@@ -153,7 +155,7 @@ const TaskCard = ({ task }) => {
               src={deleteIcon}
               alt="Delete"
               className="task-icon"
-              onClick={() => handleDelete(task.id)}
+              onClick={() => handleDelete(task.string_id)}
             />
           </>
         )}
@@ -161,7 +163,13 @@ const TaskCard = ({ task }) => {
       <>
         <div>
           {isEditing && (
-            <TaskEdit task={task} onSave={onSave} handleClose={handleClose} />
+            <TaskEdit
+              task={task}
+              onSave={() => {
+                setIsEditing(false);
+              }}
+              handleClose={handleClose}
+            />
           )}
         </div>
         <div>

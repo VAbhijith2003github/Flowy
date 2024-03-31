@@ -1,11 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { MyContext } from "../../App";
 import { v4 as uuidv4 } from "uuid";
 
 const BottomBar = () => {
-  const { tasks, setTasks } = useContext(MyContext);
   const [isActive, setIsActive] = useState(false);
   const [task, setTask] = useState({
     string_id: "",
@@ -82,6 +80,7 @@ const BottomBar = () => {
               name="name"
               value={task.title}
               placeholder="Task name"
+              className="tasknameinput"
               onChange={(e) =>
                 setTask({
                   ...task,
@@ -93,6 +92,7 @@ const BottomBar = () => {
               name="description"
               value={task.description}
               placeholder="Task description"
+              className="taskDescriptioninput"
               onChange={(e) =>
                 setTask({
                   ...task,

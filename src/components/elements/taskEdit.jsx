@@ -10,8 +10,30 @@ const TaskEdit = ({ task, onSave, handleClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(task.id, title, description, duedate);
+    onSave(task.string_id, title, description, duedate);
+    const editindb = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/api/tasks/edit/${task.string_id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: title,
+              description: description,
+              duedate: duedate,
+            }),
+          }
+        );
+      } catch (error) {
+        console.error("Error deleting task:", error);
+      }
+    };
+    editindb();
   };
+
   const handleTaskDueDateChange = (date) => {
     setDueDate(date);
   };

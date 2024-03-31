@@ -35,14 +35,13 @@ const Task = () => {
         const response = await fetch("http://localhost:3001/api/tasks");
         const data = await response.json();
         setTasks(data);
-        console.log(data);
         filterdata();
       } catch (err) {
         console.log(err);
       }
     };
     datafetch();
-  }, [query.get("category")]);
+  }, [query.get("category"), tasks]);
 
   const filterdata = () => {
     setDisplayTasks(
@@ -88,7 +87,9 @@ const Task = () => {
         ) : displayTasks.length === 0 ? (
           <p>No tasks</p>
         ) : (
-          displayTasks.map((taskdata) => <TaskCard task={taskdata} />)
+          displayTasks.map((taskdata, index) => (
+            <TaskCard key={index} task={taskdata} />
+          ))
         )}
       </div>
       <div style={{ padding: "100px" }}></div>

@@ -196,6 +196,7 @@ body {
   position: relative;
   top: 45px;
   margin: 5px;
+  cursor: pointer;
 }
 .bottom-bar {
   position: fixed;
@@ -229,8 +230,18 @@ body {
   border-radius: 5px;
   background-color: rgb(41, 40, 40);
   color: rgb(255, 255, 255);
+  height: 100%;
+  resize: vertical;
 }
-
+.taskDescriptioninput {
+  width: clamp(250px, 40vw, 800px) !important;
+  min-height: 40px;
+  max-height: 380px;
+  resize: vertical !important;
+}
+.tasknameinput {
+  height: 20px;
+}
 #task-display {
   position: sticky;
   position: -webkit-sticky;
