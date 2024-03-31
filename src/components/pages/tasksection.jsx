@@ -8,6 +8,7 @@ import user from "../../images/user.png";
 import Homepage from "../elements/homepage";
 import { MyContext } from "../../App";
 import filteredTasks from "../elements/datefilter";
+import UserTab from "../elements/usertab";
 
 function useQuery() {
   const { search } = useLocation();
@@ -17,9 +18,12 @@ function useQuery() {
 const Task = () => {
   const query = useQuery();
   const { tasks, setTasks } = useContext(MyContext);
+  const [userTab, setUserTab] = useState(false); // updated this line
   const [displayTasks, setDisplayTasks] = useState([]);
   const [introText, setIntroText] = useState(true);
-
+  const handleClick = () => {
+    setUserTab(!userTab);
+  };
   useEffect(() => {
     console.log(query.get("category"));
     if (query.get("category")) {
@@ -101,9 +105,12 @@ const Task = () => {
           right: "20px",
           height: "35px",
           width: "35px",
+          cursor: "pointer",
         }}
         alt="user"
+        onClick={handleClick}
       />
+      {userTab && <UserTab />}
       <BottomBar />
     </>
   );
