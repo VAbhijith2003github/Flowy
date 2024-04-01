@@ -5,29 +5,23 @@ function filteredTasks(tasks, filter) {
   if (filter === "Completed") {
     return tasks.filter((task) => task.completed);
   } else if (filter === "Today") {
+    const today = new Date();
     return tasks.filter(
       (task) =>
-        getDaysDifference(
-          new Date(task.duedate.split(" ")[0]).toString(), // Formatted like " Wed Mar 29 2024"
-          new Date().toString()
-        ) === 0
+        task &&
+        new Date(task.duedate).toDateString() === today.toDateString()
     );
   } else if (filter === "Tomorrow") {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
     return tasks.filter(
       (task) =>
-        getDaysDifference(
-          new Date(task.duedate.split(" ")[0]).toString(),
-          new Date().toString()
-        ) === 1
+        task &&
+        new Date(task.duedate).toDateString() === tomorrow.toDateString()
     );
   } else if (filter === "Upcoming") {
-    return tasks.filter(
-      (task) =>
-        getDaysDifference(
-          new Date(task.duedate.split(" ")[0]).toString(),
-          new Date().toString()
-        ) >= 1
-    );
+    const today = new Date();
+    return tasks.filter((task) => task && new Date(task.duedate) > today);
   }
 }
 const getDaysDifference = (date1String, date2String) => {
