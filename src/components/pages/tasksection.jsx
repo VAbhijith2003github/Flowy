@@ -9,6 +9,7 @@ import Homepage from "../elements/homepage";
 import { MyContext } from "../../App";
 import filteredTasks from "../elements/datefilter";
 import UserTab from "../elements/usertab";
+import Modal from "../elements/loginmodal";
 
 function useQuery() {
   const { search } = useLocation();
@@ -19,12 +20,23 @@ const Task = () => {
   const query = useQuery();
   const { tasks, setTasks } = useContext(MyContext);
   const { isfetching, setIsfetching } = useContext(MyContext);
-  const [userTab, setUserTab] = useState(false); // updated this line
+  const [userTab, setUserTab] = useState(false);
   const [displayTasks, setDisplayTasks] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [introText, setIntroText] = useState(true);
   const handleClick = () => {
-    setUserTab(!userTab);
+    if (loggedIn) {
+      setUserTab(!userTab);
+    } else {
+      setIsModalOpen(!isModalOpen);
+    }
   };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     console.log(query.get("category"));
     if (query.get("category")) {
@@ -114,6 +126,7 @@ const Task = () => {
       />
       {userTab && <UserTab />}
       <BottomBar />
+      <Modal isModalOpen={isModalOpen} handleModalClose={handleModalClose} />
     </>
   );
 };
