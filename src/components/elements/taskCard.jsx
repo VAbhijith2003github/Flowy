@@ -9,7 +9,7 @@ import TaskEdit from "./taskEdit";
 import Task from "./task";
 
 const TaskCard = ({ task }) => {
-  const { tasks, setTasks } = useContext(MyContext);
+  const { isfetching, setIsfetching } = useContext(MyContext);
   const [isHovered, setIsHovered] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [openCard, setOpenCard] = useState(false);
@@ -40,6 +40,7 @@ const TaskCard = ({ task }) => {
       }
     };
     updatecompletestatdb();
+    setIsfetching(true);
   };
 
   const handleDelete = (string_id) => {
@@ -56,6 +57,7 @@ const TaskCard = ({ task }) => {
       }
     };
     deletefromdb();
+    setIsfetching(true);
   };
 
   const handleMouseLeave = () => {
@@ -167,6 +169,9 @@ const TaskCard = ({ task }) => {
               task={task}
               onSave={() => {
                 setIsEditing(false);
+                document.getElementsByClassName("bottom-bar")[0].style.display =
+                  "block";
+                  setIsfetching(true);
               }}
               handleClose={handleClose}
             />

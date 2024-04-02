@@ -18,6 +18,7 @@ function useQuery() {
 const Task = () => {
   const query = useQuery();
   const { tasks, setTasks } = useContext(MyContext);
+  const { isfetching, setIsfetching } = useContext(MyContext);
   const [userTab, setUserTab] = useState(false); // updated this line
   const [displayTasks, setDisplayTasks] = useState([]);
   const [introText, setIntroText] = useState(true);
@@ -40,12 +41,13 @@ const Task = () => {
         const data = await response.json();
         setTasks(data);
         filterdata();
+        setIsfetching(false);
       } catch (err) {
         console.log(err);
       }
     };
     datafetch();
-  }, [query.get("category"), tasks]);
+  }, [query.get("category"), isfetching]);
 
   const filterdata = () => {
     setDisplayTasks(

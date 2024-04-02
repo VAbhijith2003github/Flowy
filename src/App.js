@@ -6,13 +6,15 @@ export const MyContext = createContext();
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
+  const [isfetching, setIsfetching] = useState(true);
 
   return (
     <div>
-      <MyContext.Provider value={{ tasks, setTasks }}>
+      <MyContext.Provider value={{ tasks, setTasks, isfetching, setIsfetching  }}>
         <Router>
           <Routes>
             <Route path="/" element={<TaskSection />} />
+            <Route path="/task" element={<Task />} />
             <Route path="/task" element={<Task />} />
           </Routes>
         </Router>

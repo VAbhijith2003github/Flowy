@@ -8,9 +8,9 @@ const TaskEdit = ({ task, onSave, handleClose }) => {
   const [description, setDescription] = useState(task.description);
   const [duedate, setDueDate] = useState(new Date(task.duedate));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(task.string_id, title, description, duedate);
+    onSave();
     const editindb = async () => {
       try {
         const response = await fetch(
@@ -23,7 +23,7 @@ const TaskEdit = ({ task, onSave, handleClose }) => {
             body: JSON.stringify({
               title: title,
               description: description,
-              duedate: duedate,
+              dueDate: duedate,
             }),
           }
         );
@@ -31,7 +31,7 @@ const TaskEdit = ({ task, onSave, handleClose }) => {
         console.error("Error deleting task:", error);
       }
     };
-    editindb();
+    await editindb();
   };
 
   const handleTaskDueDateChange = (date) => {
