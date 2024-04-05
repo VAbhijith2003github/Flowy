@@ -485,13 +485,21 @@ textarea {
   margin-right: 10px;
   cursor: pointer;
 }
-
+.tasknameinput {
+  width: clamp(250px, 40vw, 800px) !important;
+}
+.emailinput {
+  width: clamp(150px, 30vw, 400px) !important;
+  background-color: #16a085;
+}
 .menu-2-icon img {
   width: 15px;
   height: 15px;
   margin-right: 10px;
 }
-
+.userexists {
+  margin: 10px 20px;
+}
 .footer {
   display: flex;
   justify-content: space-between;

@@ -76,6 +76,11 @@ const TaskCard = ({ task }) => {
     document.getElementsByClassName("bottom-bar")[0].style.display = "none";
   };
 
+  const onsave = () => {
+    setIsfetching(true);
+    setIsEditing(false);
+    document.getElementsByClassName("bottom-bar")[0].style.display = "block";
+  };
   const duedate = new Date(task.duedate);
   const today = new Date();
 
@@ -101,7 +106,7 @@ const TaskCard = ({ task }) => {
       return;
     }
 
-    element.style.overflowY = openCard ? "hidden" : "scroll";
+    element.style.overflowY = openCard ? "hidden" : "scroll"; // disable scrolling when the card is open
 
     return () => {
       element.style.overflowY = "scroll";
@@ -172,16 +177,7 @@ const TaskCard = ({ task }) => {
       <>
         <div>
           {isEditing && (
-            <TaskEdit
-              task={task}
-              onSave={() => {
-                setIsEditing(false);
-                document.getElementsByClassName("bottom-bar")[0].style.display =
-                  "block";
-                setIsfetching(true);
-              }}
-              handleClose={handleClose}
-            />
+            <TaskEdit task={task} onSave={onsave} handleClose={handleClose} />
           )}
         </div>
         <div>

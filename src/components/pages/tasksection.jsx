@@ -101,6 +101,14 @@ const Task = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (loggedIn) {
+      document.getElementsByClassName("bottom-bar")[0].style.display = "block";
+    } else {
+      document.getElementsByClassName("bottom-bar")[0].style.display = "none";
+    }
+  }, [loggedIn]);
+
   const filterdata = () => {
     setDisplayTasks(
       filteredTasks(

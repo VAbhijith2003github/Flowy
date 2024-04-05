@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { v4 as uuidv4 } from "uuid";
@@ -7,6 +7,7 @@ import { useContext } from "react";
 
 const BottomBar = () => {
   const { isfetching, setIsfetching } = useContext(MyContext);
+  const [userexists, setUserexists] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [task, setTask] = useState({
     string_id: "",
@@ -16,7 +17,37 @@ const BottomBar = () => {
     dateofcreation: new Date(),
     dueDate: new Date(),
     dateCompleted: null,
+    assigned_to: null,
   });
+
+  const handleemailchange = (e) => {
+    setTask({
+      ...task,
+      assigned_to: e.target.value,
+    });
+    const checkforuser = async () => {
+      const authtoken = localStorage.getItem("auth-token");
+      const response = await fetch(
+        "http://localhost:3001/api/users/checkuserexits",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authtoken}`,
+          },
+          body: JSON.stringify({ email: e.target.value }),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      if (response.ok && data.message === "User found") {
+        setUserexists(true);
+      } else {
+        setUserexists(false);
+      }
+    };
+    setTimeout(checkforuser, 300);
+  };
 
   function TaskAddition(task) {
     const AddTask = async () => {
@@ -94,6 +125,7 @@ const BottomBar = () => {
                 })
               }
             />
+            <br />
             <textarea
               name="description"
               value={task.description}
@@ -136,6 +168,32 @@ const BottomBar = () => {
                 dateFormat="h:mm aa"
                 name="time"
               />
+              <br />
+              <div
+                style={{
+                  display: "flex",
+                }}
+              >
+                <input
+                  type="email"
+                  className="emailinput"
+                  placeholder="assignee email"
+                  onChange={handleemailchange}
+                />
+                {task.assigned_to && (
+                  <>
+                    {userexists ? (
+                      <p style={{ color: "#16a085" }} className="userexists">
+                        user exists
+                      </p>
+                    ) : (
+                      <p style={{ color: "red" }} className="userexists">
+                        user not found
+                      </p>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
             <div>
               <button onClick={handleAddTask}>ADD TASK</button>

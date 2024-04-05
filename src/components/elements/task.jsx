@@ -1,25 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const task = ({ task, handleCloseCard }) => {
+const Task = ({ task, handleCloseCard }) => {
   const duedate = new Date(task.duedate);
   const datecreated = new Date(task.dateofcreation);
+  const [assigned_by, setAssigned_by] = useState("");
+  useEffect(() => {
+    const getAssignedBy = async () => {
+      const authtoken = localStorage.getItem("auth-token");
+      const response = await fetch(`http://localhost:3001/api/users/getuser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authtoken}`,
+        },
+        body: JSON.stringify({ id: task.assigned_by }),
+      });
+      const data = await response.json();
+      setAssigned_by(data);
+    };
+    getAssignedBy();
+  }, []);
 
   return (
     <div className="task-edit-container">
       <div className="taskbox" id="task-display">
         <div>
           <h2>{task.title}</h2>
-          <p
-            style={{
-              margin: "0px",
-              fontSize: "13px",
-              position: "relative",
-              bottom: "2vh",
-            }}
-          >
-            {datecreated.getDate()}{" "}
-            {datecreated.toLocaleString("default", { month: "short" })}{" "}
-          </p>
+          <div style={{ display: "flex" }}>
+            <p
+              style={{
+                margin: "0px",
+                fontSize: "13px",
+                position: "relative",
+                bottom: "2vh",
+              }}
+            >
+              {datecreated.getDate()}{" "}
+              {datecreated.toLocaleString("default", { month: "short" })}{" "}
+            </p>
+            {task.assigned_by && (
+              <p
+                style={{
+                  margin: "0px",
+                  fontSize: "13px",
+                  position: "relative",
+                  bottom: "2vh",
+                }}
+              >
+                &nbsp;&nbsp;Assigned by {assigned_by}
+              </p>
+            )}
+          </div>
         </div>
         <textarea
           className="task-description-display"
@@ -65,4 +96,4 @@ const task = ({ task, handleCloseCard }) => {
   );
 };
 
-export default task;
+export default Task;
