@@ -4,6 +4,7 @@ const Task = ({ task, handleCloseCard }) => {
   const duedate = new Date(task.duedate);
   const datecreated = new Date(task.dateofcreation);
   const [assigned_by, setAssigned_by] = useState("");
+  const [assigned_to, setAssigned_to] = useState("");
   useEffect(() => {
     const getAssignedBy = async () => {
       const authtoken = localStorage.getItem("auth-token");
@@ -19,6 +20,25 @@ const Task = ({ task, handleCloseCard }) => {
       setAssigned_by(data);
     };
     getAssignedBy();
+    if (task.assigned_to) {
+      const getAssignedTo = async () => {
+        const authtoken = localStorage.getItem("auth-token");
+        const response = await fetch(
+          `http://localhost:3001/api/users/getuser`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authtoken}`,
+            },
+            body: JSON.stringify({ id: task.assigned_to }),
+          }
+        );
+        const data = await response.json();
+        setAssigned_to(data);
+      };
+      getAssignedTo();
+    }
   }, []);
 
   return (
@@ -70,6 +90,18 @@ const Task = ({ task, handleCloseCard }) => {
               minute: "numeric",
             })}
           </p>
+          {task.assigned_to && (
+            <p
+              style={{
+                margin: "0px",
+                fontSize: "13px",
+                position: "relative",
+                bottom: "2vh",
+              }}
+            >
+              &nbsp;&nbsp;Assigned to {assigned_to}
+            </p>
+          )}
           {task.completed ? (
             <p style={{ color: "rgba(117, 233, 152)" }}>
               Completed :{" "}
