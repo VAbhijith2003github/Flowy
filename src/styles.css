@@ -478,11 +478,12 @@ textarea {
   padding: 5px 10px;
   background-color: transparent;
   border-radius: 10px;
+  cursor: pointer;
 }
-
 .menu-2-icon {
   font-size: 24px;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .menu-2-icon img {
@@ -546,7 +547,7 @@ textarea {
   margin: 10px;
   color: white;
   padding: 8px;
-  width: clamp(200px,20vw,800px);
+  width: clamp(200px, 20vw, 800px);
   background-color: rgba(155, 153, 153, 0.5);
   border-radius: 6px;
 }

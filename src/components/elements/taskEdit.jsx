@@ -13,12 +13,14 @@ const TaskEdit = ({ task, onSave, handleClose }) => {
     onSave();
     const editindb = async () => {
       try {
+        const authtoken = localStorage.getItem("auth-token");
         const response = await fetch(
           `http://localhost:3001/api/tasks/edit/${task.string_id}`,
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${authtoken}`,
             },
             body: JSON.stringify({
               title: title,

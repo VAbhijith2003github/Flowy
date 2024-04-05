@@ -20,11 +20,12 @@ const Task = () => {
   const query = useQuery();
   const { tasks, setTasks } = useContext(MyContext);
   const { isfetching, setIsfetching } = useContext(MyContext);
+  const { loggedIn, setLoggedIn } = useContext(MyContext);
   const [userTab, setUserTab] = useState(false);
   const [displayTasks, setDisplayTasks] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [introText, setIntroText] = useState(true);
+
   const handleClick = () => {
     if (loggedIn) {
       setUserTab(!userTab);
@@ -49,7 +50,12 @@ const Task = () => {
   useEffect(() => {
     const datafetch = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/tasks");
+        const authtoken = localStorage.getItem("auth-token");
+        const response = await fetch("http://localhost:3001/api/tasks", {
+          headers: {
+            Authorization: `Bearer ${authtoken}`,
+          },
+        });
         const data = await response.json();
         setTasks(data);
         filterdata();
@@ -59,7 +65,41 @@ const Task = () => {
       }
     };
     datafetch();
-  }, [query.get("category"), isfetching]);
+  }, [query.get("category"), isfetching, loggedIn]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("auth-token");
+    if (token) {
+      const verifyToken = async () => {
+        try {
+          const token = localStorage.getItem("auth-token");
+          const response = await fetch(
+            "http://localhost:3001/api/users/verifyToken",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = await response.json();
+          if (data.success) {
+            setLoggedIn(true);
+          } else {
+            setLoggedIn(false);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+      verifyToken();
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  }, []);
 
   const filterdata = () => {
     setDisplayTasks(
@@ -93,6 +133,8 @@ const Task = () => {
       );
     } else if (query.get("category") === "Completed") {
       setDisplayTasks(filteredTasks(tasks, "Completed"));
+    } else if (query.get("category") === "Past_due") {
+      setDisplayTasks(filteredTasks(tasks, "Past_due"));
     }
   };
 
@@ -102,12 +144,16 @@ const Task = () => {
       <div className="content">
         {introText ? (
           <Homepage />
-        ) : displayTasks.length === 0 ? (
+        ) : loggedIn && displayTasks.length === 0 ? (
           <p>No tasks</p>
-        ) : (
+        ) : loggedIn ? (
           displayTasks.map((taskdata, index) => (
             <TaskCard key={index} task={taskdata} />
           ))
+        ) : (
+          <>
+            <h4>login to continue</h4>
+          </>
         )}
       </div>
       <div style={{ padding: "100px" }}></div>

@@ -8,8 +8,7 @@ function filteredTasks(tasks, filter) {
     const today = new Date();
     return tasks.filter(
       (task) =>
-        task &&
-        new Date(task.duedate).toDateString() === today.toDateString()
+        task && new Date(task.duedate).toDateString() === today.toDateString()
     );
   } else if (filter === "Tomorrow") {
     const tomorrow = new Date();
@@ -22,6 +21,9 @@ function filteredTasks(tasks, filter) {
   } else if (filter === "Upcoming") {
     const today = new Date();
     return tasks.filter((task) => task && new Date(task.duedate) > today);
+  } else if (filter === "Past_due") {
+    const today = new Date();
+    return tasks.filter((task) => task && new Date(task.duedate) < today);
   }
 }
 const getDaysDifference = (date1String, date2String) => {

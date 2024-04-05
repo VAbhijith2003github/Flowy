@@ -7,10 +7,19 @@ export const MyContext = createContext();
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [isfetching, setIsfetching] = useState(true);
-
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
     <div>
-      <MyContext.Provider value={{ tasks, setTasks, isfetching, setIsfetching  }}>
+      <MyContext.Provider
+        value={{
+          tasks,
+          setTasks,
+          isfetching,
+          setIsfetching,
+          loggedIn,
+          setLoggedIn,
+        }}
+      >
         <Router>
           <Routes>
             <Route path="/" element={<TaskSection />} />

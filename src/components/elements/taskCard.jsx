@@ -22,12 +22,14 @@ const TaskCard = ({ task }) => {
     console.log(string_id);
     const updatecompletestatdb = async () => {
       try {
+        const authtoken = localStorage.getItem("auth-token");
         const response = await fetch(
           `http://localhost:3001/api/tasks/updatecompletestatdb/${string_id}`,
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${authtoken}`,
             },
             body: JSON.stringify({
               completed: !task.completed,
@@ -46,10 +48,15 @@ const TaskCard = ({ task }) => {
   const handleDelete = (string_id) => {
     const deletefromdb = async () => {
       try {
+        const authtoken = localStorage.getItem("auth-token");
         const response = await fetch(
           `http://localhost:3001/api/tasks/${string_id}`,
           {
             method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authtoken}`,
+            },
           }
         );
       } catch (error) {
@@ -171,7 +178,7 @@ const TaskCard = ({ task }) => {
                 setIsEditing(false);
                 document.getElementsByClassName("bottom-bar")[0].style.display =
                   "block";
-                  setIsfetching(true);
+                setIsfetching(true);
               }}
               handleClose={handleClose}
             />

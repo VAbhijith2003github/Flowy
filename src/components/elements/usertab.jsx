@@ -17,19 +17,25 @@ const UserTab = ({ user }) => {
         <div className="menu-2">
           <div className="menu-2-item">
             <span className="menu-2-icon">
-              <img src={plus} alt="plus"/>
+              <img src={plus} alt="plus" />
             </span>
             <span>Add a team</span>
           </div>
-          <div className="menu-2-item">
+          <div
+            className="menu-2-item"
+            onClick={() => {
+              localStorage.removeItem("auth-token");
+              window.location.reload();
+            }}
+          >
             <span className="menu-2-icon">
-              <img src={logout} alt="plus"/>
+              <img src={logout} alt="plus" />
             </span>
             <span>Log out</span>
           </div>
           <div className="menu-2-item">
             <span className="menu-2-icon">
-              <img src={settings} alt="plus"/>
+              <img src={settings} alt="plus" />
             </span>
             <span>Settings</span>
           </div>

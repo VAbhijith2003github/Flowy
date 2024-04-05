@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { v4 as uuidv4 } from "uuid";
+import { MyContext } from "../../App";
+import { useContext } from "react";
 
 const BottomBar = () => {
+  const { isfetching, setIsfetching } = useContext(MyContext);
   const [isActive, setIsActive] = useState(false);
   const [task, setTask] = useState({
     string_id: "",
@@ -20,10 +23,12 @@ const BottomBar = () => {
       try {
         const id = uuidv4();
         task.string_id = id;
+        const authtoken = localStorage.getItem("auth-token");
         const response = await fetch("http://localhost:3001/api/tasks", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authtoken}`,
           },
           body: JSON.stringify(task),
         });
@@ -34,6 +39,7 @@ const BottomBar = () => {
 
         const data = await response.json();
         console.log(data);
+        setIsfetching(true);
       } catch (error) {
         console.error("Error adding task:", error);
       }

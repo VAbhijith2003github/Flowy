@@ -34,6 +34,10 @@ const Sidebar = () => {
           {" "}
           Completed
         </Link>
+        <Link to="/?category=Past_due" className="menu-item">
+          {" "}
+          Past due
+        </Link>
       </div>
 
       <div className="content">

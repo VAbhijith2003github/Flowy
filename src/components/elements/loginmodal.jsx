@@ -1,26 +1,44 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { Link } from "react-router-dom";
+import { MyContext } from "../../App";
+import { useContext } from "react";
 
 const LoginModal = ({ isModalOpen, handleModalClose }) => {
   const [email, setEmail] = useState("");
+  const { loggedIn, setLoggedIn } = useContext(MyContext);
   const [password, setPassword] = useState("");
+  const [signup, setSignup] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const login = async () => {
-      const response = await fetch("http://localhost:3001/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const dateofcreation = new Date();
+      const user_id = uuidv4();
+      const response = await fetch(
+        `http://localhost:3001/api/users/${signup ? "signup" : "login"}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id, dateofcreation, email, password }),
+        }
+      );
       const data = await response.json();
       console.log(data);
+      localStorage.setItem("auth-token", data.token);
+      console.log(data.token);
+      setLoggedIn(true);
+      handleModalClose();
     };
     login();
   };
 
   if (!isModalOpen) return null;
+  const handleClick = () => {
+    setSignup(!signup);
+  };
 
   return (
     <div className="modal">
@@ -32,7 +50,7 @@ const LoginModal = ({ isModalOpen, handleModalClose }) => {
         &times;
       </span>
       <div className="modal-content">
-        <h2>Login</h2>
+        {signup ? <h2>SignUp</h2> : <h2>Login</h2>}
         <form onSubmit={handleSubmit} className="modalform">
           <input
             type="email"
@@ -48,7 +66,21 @@ const LoginModal = ({ isModalOpen, handleModalClose }) => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
-          <span style={{ margin: "5px" }}>New to Flowy ? register here </span>
+          {signup ? (
+            <span
+              style={{ margin: "5px", cursor: "pointer" }}
+              onClick={handleClick}
+            >
+              Already signedup ? to login click here{" "}
+            </span>
+          ) : (
+            <span
+              style={{ margin: "5px", cursor: "pointer" }}
+              onClick={handleClick}
+            >
+              New to Flowy ? to signup click here{" "}
+            </span>
+          )}
           <button type="submit" className="modalbutton">
             Login
           </button>
