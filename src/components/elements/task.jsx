@@ -8,14 +8,17 @@ const Task = ({ task, handleCloseCard }) => {
   useEffect(() => {
     const getAssignedBy = async () => {
       const authtoken = localStorage.getItem("auth-token");
-      const response = await fetch(`http://localhost:3001/api/users/getuser`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authtoken}`,
-        },
-        body: JSON.stringify({ id: task.assigned_by }),
-      });
+      const response = await fetch(
+        `https://flowy-backend.onrender.com/api/users/getuser`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authtoken}`,
+          },
+          body: JSON.stringify({ id: task.assigned_by }),
+        }
+      );
       const data = await response.json();
       setAssigned_by(data);
     };
@@ -24,7 +27,7 @@ const Task = ({ task, handleCloseCard }) => {
       const getAssignedTo = async () => {
         const authtoken = localStorage.getItem("auth-token");
         const response = await fetch(
-          `http://localhost:3001/api/users/getuser`,
+          `https://flowy-backend.onrender.com/api/users/getuser`,
           {
             method: "POST",
             headers: {

@@ -15,7 +15,7 @@ const TaskEdit = ({ task, onSave, handleClose }) => {
       try {
         const authtoken = localStorage.getItem("auth-token");
         const response = await fetch(
-          `http://localhost:3001/api/tasks/edit/${task.string_id}`,
+          `https://flowy-backend.onrender.com/api/tasks/edit/${task.string_id}`,
           {
             method: "PUT",
             headers: {

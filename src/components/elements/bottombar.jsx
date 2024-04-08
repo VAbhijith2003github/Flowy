@@ -28,7 +28,7 @@ const BottomBar = () => {
     const checkforuser = async () => {
       const authtoken = localStorage.getItem("auth-token");
       const response = await fetch(
-        "http://localhost:3001/api/users/checkuserexits",
+        "https://flowy-backend.onrender.com/api/users/checkuserexits",
         {
           method: "POST",
           headers: {
@@ -55,14 +55,17 @@ const BottomBar = () => {
         const id = uuidv4();
         task.string_id = id;
         const authtoken = localStorage.getItem("auth-token");
-        const response = await fetch("http://localhost:3001/api/tasks", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authtoken}`,
-          },
-          body: JSON.stringify(task),
-        });
+        const response = await fetch(
+          "https://flowy-backend.onrender.com/api/tasks",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authtoken}`,
+            },
+            body: JSON.stringify(task),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Failed to add task");

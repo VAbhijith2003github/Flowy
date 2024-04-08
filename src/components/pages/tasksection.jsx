@@ -51,11 +51,14 @@ const Task = () => {
     const datafetch = async () => {
       try {
         const authtoken = localStorage.getItem("auth-token");
-        const response = await fetch("http://localhost:3001/api/tasks", {
-          headers: {
-            Authorization: `Bearer ${authtoken}`,
-          },
-        });
+        const response = await fetch(
+          "https://flowy-backend.onrender.com/api/tasks",
+          {
+            headers: {
+              Authorization: `Bearer ${authtoken}`,
+            },
+          }
+        );
         const data = await response.json();
         setTasks(data);
         filterdata();
@@ -74,7 +77,7 @@ const Task = () => {
         try {
           const token = localStorage.getItem("auth-token");
           const response = await fetch(
-            "http://localhost:3001/api/users/verifyToken",
+            "https://flowy-backend.onrender.com/api/users/verifyToken",
             {
               method: "POST",
               headers: {

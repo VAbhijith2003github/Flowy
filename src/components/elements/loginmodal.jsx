@@ -16,7 +16,9 @@ const LoginModal = ({ isModalOpen, handleModalClose }) => {
       const dateofcreation = new Date();
       const user_id = uuidv4();
       const response = await fetch(
-        `http://localhost:3001/api/users/${signup ? "signup" : "login"}`,
+        `https://flowy-backend.onrender.com/api/users/${
+          signup ? "signup" : "login"
+        }`,
         {
           method: "POST",
           headers: {

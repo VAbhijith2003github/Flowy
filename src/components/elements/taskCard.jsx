@@ -24,7 +24,7 @@ const TaskCard = ({ task }) => {
       try {
         const authtoken = localStorage.getItem("auth-token");
         const response = await fetch(
-          `http://localhost:3001/api/tasks/updatecompletestatdb/${string_id}`,
+          `https://flowy-backend.onrender.com/api/tasks/updatecompletestatdb/${string_id}`,
           {
             method: "PUT",
             headers: {
@@ -50,7 +50,7 @@ const TaskCard = ({ task }) => {
       try {
         const authtoken = localStorage.getItem("auth-token");
         const response = await fetch(
-          `http://localhost:3001/api/tasks/${string_id}`,
+          `https://flowy-backend.onrender.com/api/tasks/${string_id}`,
           {
             method: "DELETE",
             headers: {
