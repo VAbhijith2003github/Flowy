@@ -1,17 +1,14 @@
 import React from "react";
 import plus from "../../images/plus.png";
 import logout from "../../images/logout.png";
-import settings from "../../images/setting.png";
+import about from "../../images/info.png";
 const UserTab = ({ user }) => {
   return (
     <>
       <div className="user-tab">
         <div className="header">
           <div className="username">
-            <span>Name</span>
-          </div>
-          <div className="task-status">
-            <span>0/5 tasks</span>
+            <span>USER</span>
           </div>
         </div>
         <div className="menu-2">
@@ -19,7 +16,7 @@ const UserTab = ({ user }) => {
             <span className="menu-2-icon">
               <img src={plus} alt="plus" />
             </span>
-            <span>Add a team</span>
+            <span>invite a friend</span>
           </div>
           <div
             className="menu-2-item"
@@ -34,10 +31,17 @@ const UserTab = ({ user }) => {
             <span>Log out</span>
           </div>
           <div className="menu-2-item">
-            <span className="menu-2-icon">
-              <img src={settings} alt="plus" />
-            </span>
-            <span>Settings</span>
+            <a
+              href="https://github.com/VAbhijith2003github/Flowy"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "white" }}
+            >
+              <span className="menu-2-icon">
+                <img src={about} alt="plus" />
+              </span>
+              <span>About</span>
+            </a>
           </div>
         </div>
       </div>

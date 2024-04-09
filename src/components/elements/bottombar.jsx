@@ -142,35 +142,37 @@ const BottomBar = () => {
               }
             />
             <div>
-              <label
-                htmlFor="date"
-                style={{ fontSize: "15px", marginLeft: "10px" }}
-              >
-                select date
-              </label>
-              <DatePicker
-                selected={task.dueDate}
-                onChange={handleTaskDueDateChange}
-                dateFormat="Pp"
-                minDate={minDate}
-                name="date"
-              />
-              <label
-                htmlFor="time"
-                style={{ fontSize: "15px", marginLeft: "10px" }}
-              >
-                select time
-              </label>
-              <DatePicker
-                selected={task.dueDate}
-                onChange={handleTaskDueDateChange}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={15}
-                timeCaption="Time"
-                dateFormat="h:mm aa"
-                name="time"
-              />
+              <div className="dateselectiondiv">
+                <label
+                  htmlFor="date"
+                  style={{ fontSize: "15px", marginLeft: "10px" }}
+                >
+                  select date
+                </label>
+                <DatePicker
+                  selected={task.dueDate}
+                  onChange={handleTaskDueDateChange}
+                  dateFormat="Pp"
+                  minDate={minDate}
+                  name="date"
+                />
+                <label
+                  htmlFor="time"
+                  style={{ fontSize: "15px", marginLeft: "10px" }}
+                >
+                  select time
+                </label>
+                <DatePicker
+                  selected={task.dueDate}
+                  onChange={handleTaskDueDateChange}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={15}
+                  timeCaption="Time"
+                  dateFormat="h:mm aa"
+                  name="time"
+                />
+              </div>
               <br />
               <div
                 style={{

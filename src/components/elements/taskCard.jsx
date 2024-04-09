@@ -140,21 +140,23 @@ const TaskCard = ({ task }) => {
           {duedate.getDate()}{" "}
           {duedate.toLocaleString("default", { month: "short" })}
         </p>
-        <button
-          className="complete-button"
-          onClick={() => handleMarkasComplete(task.string_id)}
-        >
-          {task.completed ? "Mark as incomplete" : "Mark as complete"}
-        </button>
-        {isHovered && (
+        <div className="taskbuttondiv">
           <button
             className="complete-button"
-            onClick={handleClick}
-            style={{ marginLeft: "10px" }}
+            onClick={() => handleMarkasComplete(task.string_id)}
           >
-            View Task
+            {task.completed ? "Mark as incomplete" : "Mark as complete"}
           </button>
-        )}
+          {isHovered && (
+            <button
+              className="complete-button"
+              onClick={handleClick}
+              style={{ marginLeft: "10px" }}
+            >
+              View Task
+            </button>
+          )}
+        </div>
       </div>
       <div className="task-actions">
         {isHovered && (

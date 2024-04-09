@@ -174,8 +174,8 @@ const Task = () => {
           position: "absolute",
           top: "20px",
           right: "20px",
-          height: "35px",
-          width: "35px",
+          height: "30px",
+          width: "30px",
           cursor: "pointer",
         }}
         alt="user"

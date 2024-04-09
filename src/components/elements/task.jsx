@@ -49,7 +49,7 @@ const Task = ({ task, handleCloseCard }) => {
       <div className="taskbox" id="task-display">
         <div>
           <h2>{task.title}</h2>
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex" }} className="tasktop">
             <p
               style={{
                 margin: "0px",
@@ -58,7 +58,7 @@ const Task = ({ task, handleCloseCard }) => {
                 bottom: "2vh",
               }}
             >
-              {datecreated.getDate()}{" "}
+              {datecreated.getDate()}&nbsp;
               {datecreated.toLocaleString("default", { month: "short" })}{" "}
             </p>
             {task.assigned_by && (
