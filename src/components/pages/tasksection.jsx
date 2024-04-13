@@ -60,9 +60,14 @@ const Task = () => {
           }
         );
         const data = await response.json();
-        setTasks(data);
-        filterdata();
-        setIsfetching(false);
+        if (response.status === 200) {
+          setTasks(data);
+          filterdata();
+          setIsfetching(false);
+        } else if (response.status === 401) {
+          localStorage.removeItem("auth-token");
+          window.location.reload();
+        }
       } catch (err) {
         console.log(err);
       }

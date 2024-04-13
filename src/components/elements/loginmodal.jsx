@@ -29,10 +29,13 @@ const LoginModal = ({ isModalOpen, handleModalClose }) => {
       );
       const data = await response.json();
       console.log(data);
-      localStorage.setItem("auth-token", data.token);
-      console.log(data.token);
-      setLoggedIn(true);
-      handleModalClose();
+      if (response.status === 200) {
+        localStorage.setItem("auth-token", data.token);
+        setLoggedIn(true);
+        handleModalClose();
+      } else {
+        alert("error -->" + data.message);
+      }
     };
     login();
   };
