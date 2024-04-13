@@ -67,8 +67,17 @@ const BottomBar = () => {
           }
         );
 
-        if (!response.ok) {
-          throw new Error("Failed to add task");
+        if (response.status === 200) {
+          setTask({
+            string_id: "",
+            title: "",
+            completed: false,
+            description: "",
+            dateofcreation: new Date(),
+            dueDate: new Date(),
+            dateCompleted: null,
+            assigned_to: null,
+          });
         }
 
         const data = await response.json();
@@ -93,6 +102,20 @@ const BottomBar = () => {
     setTask({
       ...task,
       dueDate: date,
+    });
+  };
+
+  const handleCancel = () => {
+    setIsActive(false);
+    setTask({
+      string_id: "",
+      title: "",
+      completed: false,
+      description: "",
+      dateofcreation: new Date(),
+      dueDate: new Date(),
+      dateCompleted: null,
+      assigned_to: null,
     });
   };
 
@@ -202,18 +225,7 @@ const BottomBar = () => {
             </div>
             <div>
               <button onClick={handleAddTask}>ADD TASK</button>
-              <button
-                onClick={() => {
-                  setIsActive(false);
-                  setTask({
-                    name: "",
-                    description: "",
-                    dueDate: new Date(),
-                  });
-                }}
-              >
-                CANCEL
-              </button>
+              <button onClick={handleCancel}>CANCEL</button>
             </div>
           </div>
         </>
